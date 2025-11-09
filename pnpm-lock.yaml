@@ -13,7 +13,7 @@ importers:
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       '@langchain/community':
         specifier: ^0.3.40
-        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
+        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
       '@langchain/core':
         specifier: ^0.3.44
         version: 0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
@@ -32,6 +32,9 @@ importers:
       bullmq:
         specifier: ^5.63.0
         version: 5.63.0
+      cloudinary:
+        specifier: ^2.8.0
+        version: 2.8.0
       cohere-ai:
         specifier: ^7.19.0
         version: 7.19.0
@@ -44,6 +47,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      multer-storage-cloudinary:
+        specifier: ^4.0.0
+        version: 4.0.0(cloudinary@2.8.0)
       pdf-parse:
         specifier: 1.1.1
         version: 1.1.1
@@ -1139,6 +1145,10 @@ packages:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
 
+  cloudinary@2.8.0:
+    resolution: {integrity: sha512-s7frvR0HnQXeJsQSIsbLa/I09IMb1lOnVLEDH5b5E53WTiCYgrNNOBGV/i/nLHwrcEOUkqjfSwP1+enXWNYmdw==}
+    engines: {node: '>=9'}
+
   cluster-key-slot@1.1.2:
     resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
     engines: {node: '>=0.10.0'}
@@ -1590,6 +1600,9 @@ packages:
   lodash.once@4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}
 
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+
   long@5.3.2:
     resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
 
@@ -1645,6 +1658,11 @@ packages:
 
   msgpackr@1.11.5:
     resolution: {integrity: sha512-UjkUHN0yqp9RWKy0Lplhh+wlpdt9oQBYgULZOiFhV3VclSF1JnSQWZ5r9gORQlNYaUKQoR8itv7g7z1xDDuACA==}
+
+  multer-storage-cloudinary@4.0.0:
+    resolution: {integrity: sha512-25lm9R6o5dWrHLqLvygNX+kBOxprzpmZdnVKH4+r68WcfCt8XV6xfQaMuAg+kUE5Xmr8mJNA4gE0AcBj9FJyWA==}
+    peerDependencies:
+      cloudinary: ^1.21.0
 
   multer@2.0.2:
     resolution: {integrity: sha512-u7f2xaZ/UG8oLXHvtF/oWTRvT44p9ecwBBqTwgJVq0+4BW1g8OW01TyMEGWBHbyMOYVHXslaut7qEQ1meATXgw==}
@@ -1802,6 +1820,14 @@ packages:
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
+
+  q@1.5.1:
+    resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
+    engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.14.0:
     resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
@@ -2613,7 +2639,7 @@ snapshots:
       - aws-crt
       - encoding
 
-  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
+  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76)
       '@ibm-cloud/watsonx-ai': 1.7.2
@@ -2640,6 +2666,7 @@ snapshots:
       fast-xml-parser: 5.2.5
       ioredis: 5.8.2
       jsonwebtoken: 9.0.2
+      lodash: 4.17.21
       pdf-parse: 1.1.1
       playwright: 1.56.1
       weaviate-client: 3.9.0
@@ -3299,6 +3326,11 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
 
+  cloudinary@2.8.0:
+    dependencies:
+      lodash: 4.17.21
+      q: 1.5.1
+
   cluster-key-slot@1.1.2: {}
 
   cohere-ai@7.19.0:
@@ -3746,6 +3778,8 @@ snapshots:
 
   lodash.once@4.1.1: {}
 
+  lodash@4.17.21: {}
+
   long@5.3.2: {}
 
   luxon@3.7.2: {}
@@ -3793,6 +3827,10 @@ snapshots:
   msgpackr@1.11.5:
     optionalDependencies:
       msgpackr-extract: 3.0.3
+
+  multer-storage-cloudinary@4.0.0(cloudinary@2.8.0):
+    dependencies:
+      cloudinary: 2.8.0
 
   multer@2.0.2:
     dependencies:
@@ -3940,6 +3978,8 @@ snapshots:
       punycode: 2.3.1
 
   punycode@2.3.1: {}
+
+  q@1.5.1: {}
 
   qs@6.14.0:
     dependencies:

@@ -7,8 +7,35 @@ import { CohereEmbeddings } from "@langchain/cohere";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatCohere } from "@langchain/cohere";
 import { HumanMessage } from "@langchain/core/messages";
+import Cloudinary from 'cloudinary'
+import CloudinaryStorage from 'multer-storage-cloudinary' 
 
 dotenv.config(); 
+
+const cloudinary = Cloudinary.v2
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+})
+
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: (req, file) => {
+      const folderPath = '/uploads';
+      const fileExtension = path.extname(file.originalname).substring(1);
+      const publicId = `${file.fieldname}-${Date.now()}`;
+      
+      return {
+        folder: folderPath,
+        public_id: publicId,
+        format: fileExtension,
+      };
+    },
+  });
+
+const uploads = multer({ storage: storage })
 
 const client = new ChatCohere({
   apiKey: process.env.COHERE_API_KEY,
@@ -34,18 +61,6 @@ const vectorStore = await QdrantVectorStore.fromExistingCollection( embeddings,{
   url: process.env.QDRANT_URL,
   collectionName: "pdf-chat-collection",
 });
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null,`${uniqueSuffix}-${file.originalname}`)
-  }
-})
-
-const uploads = multer({ storage: storage })
 
 const app  = express()
 app.use(cors())

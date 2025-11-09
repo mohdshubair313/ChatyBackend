@@ -19,10 +19,12 @@
     "@langchain/qdrant": "^1.0.0",
     "@langchain/textsplitters": "^1.0.0",
     "bullmq": "^5.63.0",
+    "cloudinary": "^2.8.0",
     "cohere-ai": "^7.19.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "multer-storage-cloudinary": "^4.0.0",
     "pdf-parse": "1.1.1",
     "pdfjs-dist": "^5.4.296"
   },
