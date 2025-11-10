@@ -7,6 +7,7 @@
     "dev": "nodemon index.js",
     "dev:worker": "nodemon worker.js"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "@langchain/openai": "^0.5.5",
     "@langchain/qdrant": "^1.0.0",
     "@langchain/textsplitters": "^1.0.0",
+    "axios": "^1.13.2",
     "bullmq": "^5.63.0",
     "cloudinary": "^2.8.0",
     "cohere-ai": "^7.19.0",

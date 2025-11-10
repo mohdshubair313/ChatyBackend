@@ -13,7 +13,7 @@ importers:
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       '@langchain/community':
         specifier: ^0.3.40
-        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
+        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
       '@langchain/core':
         specifier: ^0.3.44
         version: 0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
@@ -29,6 +29,9 @@ importers:
       '@langchain/textsplitters':
         specifier: ^1.0.0
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
+      axios:
+        specifier: ^1.13.2
+        version: 1.13.2
       bullmq:
         specifier: ^5.63.0
         version: 5.63.0
@@ -1090,6 +1093,9 @@ packages:
 
   axios@1.13.1:
     resolution: {integrity: sha512-hU4EGxxt+j7TQijx1oYdAjw4xuIp1wRQSsbMFwSthCWeBQur1eF+qJ5iQ5sN3Tw8YRzQNKb8jszgBdMDVqwJcw==}
+
+  axios@1.13.2:
+    resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
@@ -2639,7 +2645,7 @@ snapshots:
       - aws-crt
       - encoding
 
-  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.1)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
+  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76)
       '@ibm-cloud/watsonx-ai': 1.7.2
@@ -2651,7 +2657,7 @@ snapshots:
       flat: 5.0.2
       ibm-cloud-sdk-core: 5.4.3
       js-yaml: 4.1.0
-      langchain: 0.3.36(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(axios@1.13.1)(handlebars@4.7.8)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(ws@8.18.3)
+      langchain: 0.3.36(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(axios@1.13.2)(handlebars@4.7.8)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(ws@8.18.3)
       langsmith: 0.3.77(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
       openai: 6.7.0(ws@8.18.3)(zod@3.25.76)
       uuid: 10.0.0
@@ -3256,6 +3262,14 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
+  axios@1.13.2:
+    dependencies:
+      follow-redirects: 1.15.11(debug@4.4.3)
+      form-data: 4.0.4
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
   base64-js@1.5.1: {}
 
   binary-extensions@2.3.0: {}
@@ -3643,7 +3657,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.13.1)
+      retry-axios: 2.6.0(axios@1.13.1(debug@4.4.3))
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -3718,7 +3732,7 @@ snapshots:
       jwa: 1.4.2
       safe-buffer: 5.2.1
 
-  langchain@0.3.36(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(axios@1.13.1)(handlebars@4.7.8)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(ws@8.18.3):
+  langchain@0.3.36(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(axios@1.13.2)(handlebars@4.7.8)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(ws@8.18.3):
     dependencies:
       '@langchain/core': 0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
       '@langchain/openai': 0.5.18(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
@@ -3735,7 +3749,7 @@ snapshots:
     optionalDependencies:
       '@langchain/cohere': 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       '@langchain/deepseek': 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
-      axios: 1.13.1(debug@4.4.3)
+      axios: 1.13.2
       handlebars: 4.7.8
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -4024,7 +4038,7 @@ snapshots:
 
   requires-port@1.0.0: {}
 
-  retry-axios@2.6.0(axios@1.13.1):
+  retry-axios@2.6.0(axios@1.13.1(debug@4.4.3)):
     dependencies:
       axios: 1.13.1(debug@4.4.3)
 

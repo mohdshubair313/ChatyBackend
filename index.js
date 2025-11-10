@@ -7,35 +7,8 @@ import { CohereEmbeddings } from "@langchain/cohere";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatCohere } from "@langchain/cohere";
 import { HumanMessage } from "@langchain/core/messages";
-import Cloudinary from 'cloudinary'
-import CloudinaryStorage from 'multer-storage-cloudinary' 
-
+import storage from './pdfUploader'
 dotenv.config(); 
-
-const cloudinary = Cloudinary.v2
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-})
-
-
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: (req, file) => {
-      const folderPath = '/uploads';
-      const fileExtension = path.extname(file.originalname).substring(1);
-      const publicId = `${file.fieldname}-${Date.now()}`;
-      
-      return {
-        folder: folderPath,
-        public_id: publicId,
-        format: fileExtension,
-      };
-    },
-  });
-
-const uploads = multer({ storage: storage })
 
 const client = new ChatCohere({
   apiKey: process.env.COHERE_API_KEY,
@@ -57,7 +30,7 @@ const embeddings = new CohereEmbeddings({
   batchSize: 48,
 });
 
-const vectorStore = await QdrantVectorStore.fromExistingCollection( embeddings,{
+const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings,{
   url: process.env.QDRANT_URL,
   collectionName: "pdf-chat-collection",
 });
@@ -83,7 +56,6 @@ app.post('/uploads/pdf', uploads.single('file'), async (req,res) => {
       // add the full pdf path which is best to send in workers and then chunk in workers.js
         path: req.file.path,
         filename: req.file.originalname,
-        destination: req.file.destination,
         size: req.file.size,
         mimetype: req.file.mimetype,
     }))
@@ -93,7 +65,8 @@ app.post('/uploads/pdf', uploads.single('file'), async (req,res) => {
         fileInfo: {
             originalName: req.file.originalname,
             savedAs: req.file.filename,
-            path: req.file.path
+            path: req.file.path,
+
         }
     });
     

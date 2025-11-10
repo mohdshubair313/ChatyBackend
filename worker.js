@@ -1,19 +1,25 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
 import { Worker } from 'bullmq';
 import { CohereEmbeddings } from "@langchain/cohere";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { CharacterTextSplitter } from "@langchain/textsplitters";
+import { Blob } from 'node:buffer';
+
 
 const worker = new Worker('file-upload-Queue', async job => {
     try {
         const data = JSON.parse(job.data);
+        console.log(data)
         console.log(`\n📄 Processing: ${data.filename}`);
 
+        const response = await axios.get(data.path)
+        await response.buffer() // get the pdf content as a buffer
+
         // Load PDF
-        const loader = new PDFLoader(data.path);
+        const blob = new Blob([response], {type: 'application/pdf'})
+        const loader = new PDFLoader(blob);
         const docs = await loader.load();
         console.log(`Loaded ${docs.length} page(s)`);
 
@@ -34,9 +40,9 @@ const worker = new Worker('file-upload-Queue', async job => {
 
         // Store in Qdrant
         console.log(`Storing in Qdrant...`);
-        
+
         try {
-            const vectorStore = await QdrantVectorStore.fromExistingCollection( embeddings,{
+            const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
                 url: process.env.QDRANT_URL,
                 collectionName: "pdf-chat-collection",
             });
@@ -54,11 +60,11 @@ const worker = new Worker('file-upload-Queue', async job => {
         }
 
         console.log(`Done! ${splitDocs.length} chunks stored\n`);
-        
-        return { 
-            success: true, 
+
+        return {
+            success: true,
             filename: data.filename,
-            chunks: splitDocs.length 
+            chunks: splitDocs.length
         };
 
     } catch (error) {
