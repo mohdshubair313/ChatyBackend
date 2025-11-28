@@ -38,3 +38,7 @@ Thumbs.db
 
 # Optional: Output of 'npm pack'
 *.tgz
+
+# Temporary Directories
+temp/
+tmp/

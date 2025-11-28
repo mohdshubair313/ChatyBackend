@@ -1,7 +1,8 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
 import path from 'path'
-import multer from 'multer';
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -20,6 +21,7 @@ const storage = new CloudinaryStorage({
       path: folderPath,
       public_id: publicId,
       format: fileExtension,
+      resource_type: 'raw',
     };
   },
 });

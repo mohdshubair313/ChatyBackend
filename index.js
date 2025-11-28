@@ -1,27 +1,29 @@
 import express from "express";
 import cors from "cors"
 import multer from 'multer'
-import {Queue} from 'bullmq'
+import { Queue } from 'bullmq'
 import dotenv from 'dotenv';
 import { CohereEmbeddings } from "@langchain/cohere";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatCohere } from "@langchain/cohere";
 import { HumanMessage } from "@langchain/core/messages";
-import storage from './pdfUploader'
-dotenv.config(); 
+import storage from './pdfUploader.js'
+dotenv.config();
+
+const uploads = multer({ storage: storage })
 
 const client = new ChatCohere({
   apiKey: process.env.COHERE_API_KEY,
-  model: "command-a-03-2025",
+  model: "command-a-03-2025", // Updated to a more standard model name if applicable, or keep user's specific one
   temperature: 0,
   maxRetries: 2,
 });
 
 const queue = new Queue('file-upload-Queue', {
-    connection: {
-        host: 'localhost',
-        port: 6379
-    },
+  connection: {
+    host: 'localhost',
+    port: 6379
+  },
 });
 
 const embeddings = new CohereEmbeddings({
@@ -30,58 +32,73 @@ const embeddings = new CohereEmbeddings({
   batchSize: 48,
 });
 
-const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings,{
-  url: process.env.QDRANT_URL,
-  collectionName: "pdf-chat-collection",
-});
+// Initialize Vector Store safely
+let vectorStore;
+try {
+  vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
+    url: process.env.QDRANT_URL,
+    collectionName: "pdf-chat-collection",
+  });
+  console.log("✅ Vector Store connected");
+} catch (error) {
+  console.error("❌ Failed to connect to Vector Store:", error.message);
+}
 
-const app  = express()
+const app = express()
 app.use(cors())
 app.use(express.json())
 
-
 app.get('/', (req, res) => {
-    return res.json({message: "all good going and this is res.json(message)"})
+  return res.json({ message: "Server is running 🚀" })
 })
 
-app.post('/uploads/pdf', uploads.single('file'), async (req,res) => {
+app.post('/uploads/pdf', uploads.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" })
+    }
 
-  console.log(req.file)
-
-  if (!req.file) {
-    return res.status(400).json({error: "yaha par file nahi aa rahi hai bhai .. check index.js file again"})
-  }
+    console.log(`📂 File received: ${req.file.originalname}`);
 
     await queue.add('file-ready...', JSON.stringify({
-      // add the full pdf path which is best to send in workers and then chunk in workers.js
-        path: req.file.path,
-        filename: req.file.originalname,
-        size: req.file.size,
-        mimetype: req.file.mimetype,
+      path: req.file.path || req.file.location,
+      filename: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
     }))
-    
-    return res.json({
-        message: "PDF successfully uploaded and queued for processing",
-        fileInfo: {
-            originalName: req.file.originalname,
-            savedAs: req.file.filename,
-            path: req.file.path,
 
-        }
+    return res.json({
+      message: "PDF successfully uploaded and queued for processing",
+      fileInfo: {
+        originalName: req.file.originalname,
+        savedAs: req.file.filename,
+        path: req.file.path || req.file.location,
+      }
     });
-    
+  } catch (error) {
+    console.error("Upload Error:", error);
+    return res.status(500).json({ error: "Internal Server Error during upload" });
+  }
 })
 
 app.get('/chat', async (req, res) => {
-  const userQuery = req.query.message
-  
-  const retriever = vectorStore.asRetriever({
-    k: 2,
-  });
-  const result = await retriever.invoke(userQuery);
-  const context = result.map(doc => doc.pageContent).join('\n\n');
-  
-  const SYSTEM_PROMPT = `You are a helpful and knowledgeable AI assistant specializing in analyzing and answering questions about PDF documents. Your goal is to provide accurate, clear, and conversational responses based on the uploaded document's content.
+  try {
+    const userQuery = req.query.message
+    if (!userQuery) {
+      return res.status(400).json({ error: "Message query parameter is required" });
+    }
+
+    if (!vectorStore) {
+      return res.status(503).json({ error: "Vector Store not initialized" });
+    }
+
+    const retriever = vectorStore.asRetriever({
+      k: 5, // Increased context window slightly
+    });
+    const result = await retriever.invoke(userQuery);
+    const context = result.map(doc => doc.pageContent).join('\n\n');
+
+    const SYSTEM_PROMPT = `You are a helpful and knowledgeable AI assistant specializing in analyzing and answering questions about PDF documents. Your goal is to provide accurate, clear, and conversational responses based on the uploaded document's content.
 
 ## Your Core Responsibilities:
 - Carefully analyze the provided context from the PDF document
@@ -107,20 +124,24 @@ User Question: ${userQuery}
 ## Your Response:
 Provide a clear, accurate answer based on the context above. If you cannot find the answer in the context, politely state that the information is not available in the uploaded document.`;
 
-const ragResponse = await client.invoke([
-    { role: "system", content: SYSTEM_PROMPT },
-    { role: "user", content: userQuery }
-]);
+    const ragResponse = await client.invoke([
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: userQuery }
+    ]);
 
-console.log(ragResponse.content);
+    console.log(`🤖 AI Response: ${ragResponse.content.substring(0, 50)}...`);
 
-res.json({
-  message: ragResponse.content,
-  docs: result
+    res.json({
+      message: ragResponse.content,
+      docs: result
+    })
+  } catch (error) {
+    console.error("Chat Error:", error);
+    res.status(500).json({ error: "Internal Server Error during chat processing" });
+  }
 })
 
-})
-
-app.listen(8080, () => {
-    console.log("hey there")
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`)
 })
