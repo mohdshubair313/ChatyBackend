@@ -31,7 +31,7 @@ importers:
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       axios:
         specifier: ^1.13.2
-        version: 1.13.2
+        version: 1.13.2(debug@4.4.3)
       bullmq:
         specifier: ^5.63.0
         version: 5.63.0
@@ -50,6 +50,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      ioredis:
+        specifier: ^5.8.2
+        version: 5.8.2
       multer-storage-cloudinary:
         specifier: ^4.0.0
         version: 4.0.0(cloudinary@2.8.0)
@@ -1090,9 +1093,6 @@ packages:
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-
-  axios@1.13.1:
-    resolution: {integrity: sha512-hU4EGxxt+j7TQijx1oYdAjw4xuIp1wRQSsbMFwSthCWeBQur1eF+qJ5iQ5sN3Tw8YRzQNKb8jszgBdMDVqwJcw==}
 
   axios@1.13.2:
     resolution: {integrity: sha512-VPk9ebNqPcy5lRGuSlKx752IlDatOjT9paPlm8A7yOuW2Fbvp4X3JznJtT4f0GzGLLiWE9W8onz51SqLYwzGaA==}
@@ -3254,15 +3254,7 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios@1.13.1(debug@4.4.3):
-    dependencies:
-      follow-redirects: 1.15.11(debug@4.4.3)
-      form-data: 4.0.4
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
-
-  axios@1.13.2:
+  axios@1.13.2(debug@4.4.3):
     dependencies:
       follow-redirects: 1.15.11(debug@4.4.3)
       form-data: 4.0.4
@@ -3647,7 +3639,7 @@ snapshots:
       '@types/debug': 4.1.12
       '@types/node': 18.19.130
       '@types/tough-cookie': 4.0.5
-      axios: 1.13.1(debug@4.4.3)
+      axios: 1.13.2(debug@4.4.3)
       camelcase: 6.3.0
       debug: 4.4.3
       dotenv: 16.6.1
@@ -3657,7 +3649,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.13.1(debug@4.4.3))
+      retry-axios: 2.6.0(axios@1.13.2)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -3749,7 +3741,7 @@ snapshots:
     optionalDependencies:
       '@langchain/cohere': 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       '@langchain/deepseek': 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3)
-      axios: 1.13.2
+      axios: 1.13.2(debug@4.4.3)
       handlebars: 4.7.8
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -4038,9 +4030,9 @@ snapshots:
 
   requires-port@1.0.0: {}
 
-  retry-axios@2.6.0(axios@1.13.1(debug@4.4.3)):
+  retry-axios@2.6.0(axios@1.13.2):
     dependencies:
-      axios: 1.13.1(debug@4.4.3)
+      axios: 1.13.2(debug@4.4.3)
 
   retry@0.13.1: {}
 

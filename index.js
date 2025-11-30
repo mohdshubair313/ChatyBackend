@@ -8,22 +8,26 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatCohere } from "@langchain/cohere";
 import { HumanMessage } from "@langchain/core/messages";
 import storage from './pdfUploader.js'
+import Redis from "ioredis"
+
 dotenv.config();
 
 const uploads = multer({ storage: storage })
 
 const client = new ChatCohere({
   apiKey: process.env.COHERE_API_KEY,
-  model: "command-a-03-2025", // Updated to a more standard model name if applicable, or keep user's specific one
+  model: "command-a-03-2025",
   temperature: 0,
   maxRetries: 2,
 });
 
+const Redisclient = new Redis(process.env.REDIS_URL);
+await Redisclient.set('foo', 'bar');
+let x = await Redisclient.get("foo");
+console.log(x);
+
 const queue = new Queue('file-upload-Queue', {
-  connection: {
-    host: 'localhost',
-    port: 6379
-  },
+  connection: Redisclient,
 });
 
 const embeddings = new CohereEmbeddings({
@@ -37,6 +41,7 @@ let vectorStore;
 try {
   vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
     url: process.env.QDRANT_URL,
+    apiKey: process.env.API_KEY,
     collectionName: "pdf-chat-collection",
   });
   console.log("✅ Vector Store connected");

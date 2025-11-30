@@ -7,6 +7,14 @@ import { QdrantVectorStore } from "@langchain/qdrant";
 import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
 import { CharacterTextSplitter } from "@langchain/textsplitters";
 import axios from 'axios';
+import Redis from "ioredis"
+
+const Redisclient = new Redis(process.env.REDIS_URL, {
+  maxRetriesPerRequest: null,
+});
+await Redisclient.set('foo', 'bar');
+let x = await Redisclient.get("foo");
+console.log(x);
 
 const worker = new Worker('file-upload-Queue', async job => {
   try {
@@ -56,6 +64,7 @@ const worker = new Worker('file-upload-Queue', async job => {
     // Vector Store
     const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, {
       url: process.env.QDRANT_URL,
+      apiKey: process.env.API_KEY,
       collectionName: "pdf-chat-collection",
     });
 
@@ -69,10 +78,7 @@ const worker = new Worker('file-upload-Queue', async job => {
   }
 }, {
   concurrency: 5,
-  connection: {
-    host: 'localhost',
-    port: 6379
-  }
+  connection: Redisclient
 });
 
 worker.on('completed', (job) => {
