@@ -6,11 +6,18 @@ import dotenv from 'dotenv';
 import { CohereEmbeddings } from "@langchain/cohere";
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { ChatCohere } from "@langchain/cohere";
-import { HumanMessage } from "@langchain/core/messages";
 import storage from './pdfUploader.js'
 import Redis from "ioredis"
 
 dotenv.config();
+
+// ---------- Basic checks ----------
+if (!process.env.COHERE_API_KEY) {
+  console.warn("⚠️ COHERE_API_KEY is not set");
+}
+if (!process.env.QDRANT_URL || !process.env.API_KEY) {
+  console.warn("⚠️ QDRANT_URL or API_KEY is not set for Qdrant");
+}
 
 const uploads = multer({ storage: storage })
 
@@ -22,9 +29,21 @@ const client = new ChatCohere({
 });
 
 const Redisclient = new Redis(process.env.REDIS_URL);
-await Redisclient.set('foo', 'bar');
-let x = await Redisclient.get("foo");
-console.log(x);
+
+Redisclient.on("connect", () => {
+  console.log("✅ Redis connected");
+})
+Redisclient.on("error", (err) => {
+  console.error("❌ Redis error:", err.message);
+})
+
+async function usage() {
+  await Redisclient.set('foo', 'bar');
+  let x = await Redisclient.get("foo");
+  console.log(x);
+}
+
+usage();
 
 const queue = new Queue('file-upload-Queue', {
   connection: Redisclient,
@@ -34,6 +53,7 @@ const embeddings = new CohereEmbeddings({
   apiKey: process.env.COHERE_API_KEY,
   model: "embed-english-v3.0",
   batchSize: 48,
+  checkCompatibility: false,
 });
 
 // Initialize Vector Store safely
