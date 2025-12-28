@@ -13,7 +13,7 @@ importers:
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
       '@langchain/community':
         specifier: ^0.3.40
-        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
+        version: 0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.16.2(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)
       '@langchain/core':
         specifier: ^0.3.44
         version: 0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
@@ -29,6 +29,9 @@ importers:
       '@langchain/textsplitters':
         specifier: ^1.0.0
         version: 1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))
+      '@qdrant/js-client-rest':
+        specifier: ^1.16.2
+        version: 1.16.2(typescript@5.9.3)
       axios:
         specifier: ^1.13.2
         version: 1.13.2(debug@4.4.3)
@@ -806,8 +809,8 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
-  '@qdrant/js-client-rest@1.15.1':
-    resolution: {integrity: sha512-FAPMz6Z7RFj9vUun8R9e8SYcX6EkZtdfYfnh5lFXWcjEaat9q/jce1baAJCWAr3k8yHh62HpzCRYOatLVII28g==}
+  '@qdrant/js-client-rest@1.16.2':
+    resolution: {integrity: sha512-Zm4wEZURrZ24a+Hmm4l1QQYjiz975Ep3vF0yzWR7ICGcxittNz47YK2iBOk8kb8qseCu8pg7WmO1HOIsO8alvw==}
     engines: {node: '>=18.17.0', pnpm: '>=8'}
     peerDependencies:
       typescript: '>=4.7'
@@ -815,9 +818,6 @@ packages:
   '@qdrant/openapi-typescript-fetch@1.2.6':
     resolution: {integrity: sha512-oQG/FejNpItrxRHoyctYvT3rwGZOnK4jr3JdppO/c78ktDvkWiPXPHNsrDf33K9sZdRb6PR7gi4noIapu5q4HA==}
     engines: {node: '>=18.0.0', pnpm: '>=8'}
-
-  '@sevinf/maybe@0.5.0':
-    resolution: {integrity: sha512-ARhyoYDnY1LES3vYI0fiG6e9esWfTNcXcO6+MPJJXcnyMV3bim4lnFt45VXouV7y82F4x3YH8nOQ6VztuvUiWg==}
 
   '@smithy/abort-controller@4.2.4':
     resolution: {integrity: sha512-Z4DUr/AkgyFf1bOThW2HwzREagee0sB5ycl+hDiSZOfRLW8ZgrOjDi6g8mHH19yyU5E2A/64W3z6SMIf5XiUSQ==}
@@ -2645,7 +2645,7 @@ snapshots:
       - aws-crt
       - encoding
 
-  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.15.1(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
+  '@langchain/community@0.3.57(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/credential-provider-node@3.922.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76))(@ibm-cloud/watsonx-ai@1.7.2)(@langchain/cohere@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))))(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(@langchain/deepseek@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(ws@8.18.3))(@qdrant/js-client-rest@1.16.2(typescript@5.9.3))(@smithy/util-utf8@2.3.0)(axios@1.13.2)(cohere-ai@7.19.0)(fast-xml-parser@5.2.5)(handlebars@4.7.8)(ibm-cloud-sdk-core@5.4.3)(ioredis@5.8.2)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(pdf-parse@1.1.1)(playwright@1.56.1)(weaviate-client@3.9.0)(ws@8.18.3)':
     dependencies:
       '@browserbasehq/stagehand': 1.14.0(@playwright/test@1.56.1)(deepmerge@4.3.1)(dotenv@17.2.3)(openai@6.7.0(ws@8.18.3)(zod@3.25.76))(zod@3.25.76)
       '@ibm-cloud/watsonx-ai': 1.7.2
@@ -2666,7 +2666,7 @@ snapshots:
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/credential-provider-node': 3.922.0
       '@browserbasehq/sdk': 2.6.0
-      '@qdrant/js-client-rest': 1.15.1(typescript@5.9.3)
+      '@qdrant/js-client-rest': 1.16.2(typescript@5.9.3)
       '@smithy/util-utf8': 2.3.0
       cohere-ai: 7.19.0
       fast-xml-parser: 5.2.5
@@ -2746,7 +2746,7 @@ snapshots:
   '@langchain/qdrant@1.0.0(@langchain/core@0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76)))(typescript@5.9.3)':
     dependencies:
       '@langchain/core': 0.3.79(openai@6.7.0(ws@8.18.3)(zod@3.25.76))
-      '@qdrant/js-client-rest': 1.15.1(typescript@5.9.3)
+      '@qdrant/js-client-rest': 1.16.2(typescript@5.9.3)
       uuid: 10.0.0
     transitivePeerDependencies:
       - typescript
@@ -2858,16 +2858,13 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@qdrant/js-client-rest@1.15.1(typescript@5.9.3)':
+  '@qdrant/js-client-rest@1.16.2(typescript@5.9.3)':
     dependencies:
       '@qdrant/openapi-typescript-fetch': 1.2.6
-      '@sevinf/maybe': 0.5.0
       typescript: 5.9.3
       undici: 6.22.0
 
   '@qdrant/openapi-typescript-fetch@1.2.6': {}
-
-  '@sevinf/maybe@0.5.0': {}
 
   '@smithy/abort-controller@4.2.4':
     dependencies:

@@ -63,6 +63,7 @@ try {
     url: process.env.QDRANT_URL,
     apiKey: process.env.API_KEY,
     collectionName: "pdf-chat-collection",
+    timeout: 60000,
   });
   console.log("✅ Vector Store connected");
 } catch (error) {
@@ -83,6 +84,12 @@ app.post('/uploads/pdf', uploads.single('file'), async (req, res) => {
       return res.status(400).json({ error: "No file uploaded" })
     }
 
+    if (!req.body.userId) {
+      console.warn("⚠️ Warning: No userId received in upload request body!");
+    } else {
+      console.log(`👤 Uploading for UserID: ${req.body.userId}`);
+    }
+
     console.log(`📂 File received: ${req.file.originalname}`);
 
     await queue.add('file-ready...', JSON.stringify({
@@ -90,6 +97,7 @@ app.post('/uploads/pdf', uploads.single('file'), async (req, res) => {
       filename: req.file.originalname,
       size: req.file.size,
       mimetype: req.file.mimetype,
+      userId: req.body.userId
     }))
 
     return res.json({
@@ -108,7 +116,7 @@ app.post('/uploads/pdf', uploads.single('file'), async (req, res) => {
 
 app.get('/chat', async (req, res) => {
   try {
-    const userQuery = req.query.message
+    const { message: userQuery, userId } = req.query;
     if (!userQuery) {
       return res.status(400).json({ error: "Message query parameter is required" });
     }
@@ -117,10 +125,32 @@ app.get('/chat', async (req, res) => {
       return res.status(503).json({ error: "Vector Store not initialized" });
     }
 
+    console.log(`🔎 Chat Request - UserID: '${userId}', Query: '${userQuery}'`);
+
     const retriever = vectorStore.asRetriever({
-      k: 5, // Increased context window slightly
+      k: 5,
+      filter: userId ? {
+        must: [
+          {
+            key: "metadata.userId",
+            match: {
+              value: userId
+            }
+          }
+        ]
+      } : undefined
     });
+
     const result = await retriever.invoke(userQuery);
+    console.log(`📄 Retrieved ${result.length} documents`);
+
+    if (result.length > 0) {
+      console.log(`📄 Top Doc Preview: ${result[0].pageContent.substring(0, 100)}...`);
+      console.log(`📄 Top Doc Metadata:`, result[0].metadata);
+    } else {
+      console.warn("⚠️ No documents found matching the criteria.");
+    }
+
     const context = result.map(doc => doc.pageContent).join('\n\n');
 
     const SYSTEM_PROMPT = `You are a helpful and knowledgeable AI assistant specializing in analyzing and answering questions about PDF documents. Your goal is to provide accurate, clear, and conversational responses based on the uploaded document's content.
@@ -165,6 +195,15 @@ Provide a clear, accurate answer based on the context above. If you cannot find 
     res.status(500).json({ error: "Internal Server Error during chat processing" });
   }
 })
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err);
+  if (err instanceof multer.MulterError) {
+    return res.status(500).json({ error: `Multer Error: ${err.message}` });
+  }
+  return res.status(500).json({ error: `Server Error: ${err.message}` });
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

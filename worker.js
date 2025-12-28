@@ -43,7 +43,13 @@ const worker = new Worker('file-upload-Queue', async job => {
     docs.forEach(doc => {
       doc.metadata.source = data.path;
       doc.metadata.filename = data.filename;
+      doc.metadata.userId = data.userId;
     });
+
+    if (docs.length > 0) {
+      console.log(`🔍 Worker - Sample Doc Content: ${docs[0].pageContent.substring(0, 100)}...`);
+      console.log(`🔍 Worker - Sample Doc Metadata:`, docs[0].metadata);
+    }
 
     // Split into chunks
     const textSplitter = new CharacterTextSplitter({
@@ -66,6 +72,7 @@ const worker = new Worker('file-upload-Queue', async job => {
       url: process.env.QDRANT_URL,
       apiKey: process.env.API_KEY,
       collectionName: "pdf-chat-collection",
+      timeout: 60000,
     });
 
     await vectorStore.addDocuments(splitDocs);
